@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './banner.css';
 
 export const Banner = () => (
     <React.Fragment>
