@@ -6,7 +6,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-import {useStyles} from '../css/styles.js'
 import {About} from './about_page.js'
 
 function TabPanel(props) {
@@ -42,14 +41,13 @@ function a11yProps(index) {
 
 export default function NavTabs() {
   const [value, setValue] = React.useState(0);
-  const classes = useStyles();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <div className={classes.root}>
+    <div position="relative">
       <AppBar position="static">
         <Tabs
           variant="fullWidth"
