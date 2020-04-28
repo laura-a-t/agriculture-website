@@ -6,8 +6,8 @@ import {ENGLISH, ROMANIAN} from '../state/constants.js';
 
 export const LanguageSelect = () =>
 (
-      <ButtonGroup color="primary" aria-label="outlined primary button group">
-        <Button>{ENGLISH}</Button>
-        <Button>{ROMANIAN}</Button>
+      <ButtonGroup variant="text">
+        <Button><b>{ENGLISH}</b></Button>
+        <Button><b>{ROMANIAN}</b></Button>
       </ButtonGroup>
   );
