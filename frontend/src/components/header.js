@@ -1,5 +1,5 @@
 import React from 'react';
-import {LanguageSelect} from './language_buttons.js';
+import LanguageSelect from './language_buttons.js';
 import './header.css';
 
 export const Header = ({handleChange}) => (
