@@ -2,8 +2,8 @@ import React from 'react';
 import {LanguageSelect} from './language_buttons.js';
 import './header.css';
 
-export const Header = () => (
+export const Header = ({handleChange}) => (
     <div className="headerWrapper">
-        <LanguageSelect/>
+        <LanguageSelect handleChange={handleChange}/>
     </div>
 )

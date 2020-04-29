@@ -4,10 +4,10 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import {ENGLISH, ROMANIAN} from '../state/constants.js';
 
 
-export const LanguageSelect = () =>
+export const LanguageSelect = ({handleChange}) =>
 (
       <ButtonGroup variant="text">
-        <Button><b>{ENGLISH}</b></Button>
-        <Button><b>{ROMANIAN}</b></Button>
+        <Button onclick={handleChange}><b>{ENGLISH}</b></Button>
+        <Button onclick={handleChange}><b>{ROMANIAN}</b></Button>
       </ButtonGroup>
   );
