@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {ENGLISH, ROMANIAN} from '../state/constants.js';
+import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 
 const AboutEnglish = () => (
     <React.Fragment>
