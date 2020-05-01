@@ -1,9 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import {ENGLISH, ROMANIAN} from '../state/constants.js';
 
-
-export const About = () => (
+const AboutEnglish = () => (
     <React.Fragment>
-      <h3 align="center"> About </h3>
       <p>
         We are a family company from Braila county, Romania, focused on growing cereals.
        </p>
@@ -14,4 +14,49 @@ export const About = () => (
         As a small company we are looking for bussinesses that want to work directly with us.
       </p>
     </React.Fragment>
-  );
+);
+
+const AboutRomanian = () => (
+    <React.Fragment>
+      <p>
+        Suntem on companie de familie  din Maxineni, judetul Braila, producatoare de cereale.
+       </p>
+       <p>
+        Gelu Turcanu a absolvit facultatea Ion Ionescu de la Brad din Iasi ca inginer agronom.
+        Lucreaza in agricultura de peste 30 de ani, iar in ultimii 10 ani a lucrat drept consultant, si ca manager al
+        acestei companii.
+        Suntem interesati sa lucram direct cu companii care vor sa cumpere direct de la producator.
+      </p>
+    </React.Fragment>
+);
+
+
+class About extends React.Component {
+    constructor(props) {
+    super();
+    this.state = {
+        text: {
+            [ENGLISH]: <AboutEnglish/>,
+            [ROMANIAN]: <AboutRomanian/>
+        }
+    }
+    }
+
+    render () {
+    return (
+    <React.Fragment>
+      <h3 align="center">{this.props.title}</h3>
+      {this.state.text[this.props.language]}
+    </React.Fragment>
+    )
+    }
+};
+
+const mapStateToProps = (state) => ({
+  language: state.language
+})
+
+export default connect(
+  mapStateToProps,
+  null
+)(About)
