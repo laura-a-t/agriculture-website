@@ -6,8 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {ENGLISH, ROMANIAN} from '../state/constants.js';
-import About from './pages/about_page.js'
+import {ENGLISH, ROMANIAN} from '../../state/constants.js';
+import About from '../pages/about_page.js'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
