@@ -11,29 +11,29 @@ export const productsData = [
    {
      src: require('../../images/shutterstock_rapeseed_500x500.jpg'),
      name: {
-        [ENGLISH]: 'rapeseed',
-        [ROMANIAN]: 'rapita',
+        [ENGLISH]: 'RAPESEED',
+        [ROMANIAN]: 'RAPITA',
      },
    },
    {
      src: require('../../images/shutterstock_soy_500x500.jpg'),
      name: {
-        [ENGLISH]: 'soy',
-        [ROMANIAN]: 'soia',
+        [ENGLISH]: 'SOY',
+        [ROMANIAN]: 'SOIA',
      },
    },
    {
      src: require('../../images/shutterstock_sunflower_500x500.jpg'),
      name: {
-        [ENGLISH]: 'sunflower',
-        [ROMANIAN]: 'floarea soarelui',
+        [ENGLISH]: 'SUNFLOWER',
+        [ROMANIAN]: 'FLOAREA SOARELUI',
      },
    },
    {
      src: require('../../images/shutterstock_wheat_500x500.jpg'),
      name: {
-        [ENGLISH]: 'wheat',
-        [ROMANIAN]: 'grau',
+        [ENGLISH]: 'WHEAT',
+        [ROMANIAN]: 'GRAU',
      },
    }
  ];
