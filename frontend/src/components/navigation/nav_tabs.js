@@ -7,7 +7,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {ENGLISH, ROMANIAN} from '../../state/constants.js';
-import About from '../pages/about_page.js'
+import About from '../pages/about_page.js';
+import Products from '../pages/products_page.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -77,10 +78,10 @@ function NavTabs(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <About title={state.about[props.language]}/>
+        <About/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Page Two
+        <Products/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Page Three

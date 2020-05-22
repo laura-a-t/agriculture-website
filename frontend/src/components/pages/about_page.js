@@ -45,7 +45,6 @@ class About extends React.Component {
     render () {
     return (
     <React.Fragment>
-      <h3 align="center">{this.props.title}</h3>
       {this.state.text[this.props.language]}
     </React.Fragment>
     )

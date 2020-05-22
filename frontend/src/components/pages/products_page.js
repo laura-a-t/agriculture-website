@@ -1,17 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+
+import './products_page.css';
+import {productsData} from './products_page_data.js';
 
 
-export const About = () => (
+
+class Products extends React.Component {
+    render () {
+    return (
     <React.Fragment>
-      <h3 align="center"> About </h3>
-      <p>
-        We are a family company from Braila county, Romania, focused on growing cereals.
-       </p>
-       <p>
-        Gelu Turcanu has graduated with an Agriculture degree from the Ion Ionescu de la Brad University in Iasi.
-        He has been working in this field for over 30 years, for the past 10 years as a consultant and running this
-        bussiness as well.
-        As a small company we are looking for bussinesses that want to work directly with us.
-      </p>
+      <GridList cellHeight={300} cols={7} className="cardContainer">
+        {productsData.map((product, index) => {
+        const name = product.name[this.props.language];
+        return (
+          <GridListTile cols={2} key={index} className="card">
+            <img src={product.src} alt={name} className="cardImage"/>
+            <GridListTileBar title={name}/>
+          </GridListTile>
+        )
+        })}
+      </GridList>
     </React.Fragment>
-  );
+    )
+    }
+};
+
+const mapStateToProps = (state) => ({
+  language: state.language
+})
+
+export default connect(
+  mapStateToProps,
+  null
+)(Products)
