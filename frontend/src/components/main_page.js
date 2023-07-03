@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import { MuiThemeProvider } from '@material-ui/core';
+import Container from '@mui/material/Container';
+import { ThemeProvider } from '@mui/material/styles';
 import {theme} from '../themes/index.js'
 import NavTabs from './navigation/nav_tabs.js';
 import {Banner} from './navigation/banner.js';
@@ -8,13 +8,13 @@ import {Header} from './navigation/header.js';
 
 
 const MainPage = () => (
-            <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
                 <Container maxWidth="md">
                     <Header/>
                     <Banner/>
                     <NavTabs/>
                 </Container>
-            </MuiThemeProvider>
+            </ThemeProvider>
         );
 
 export { MainPage };
