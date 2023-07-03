@@ -5,13 +5,20 @@ import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 const AboutEnglish = () => (
     <React.Fragment>
       <p>
-        We are a family company from Braila county, Romania, focused on growing cereals.
-       </p>
-       <p>
-        Gelu Turcanu has graduated with an Agriculture degree from the Ion Ionescu de la Brad University in Iasi.
-        He has been working in this field for over 30 years, for the past 10 years as a consultant and running this
-        bussiness as well.
-        As a small company we are looking for bussinesses that want to work directly with us.
+        My name is Gelu Țurcanu and I am the manager of Geterra, a family company from Măxineni, Brăila county, focused
+        on growing grains.
+      </p>
+      <p>
+        I graduated from the Ion Ionescu de la Brad, Iasi university with a degree in agriculture and I work for over 30
+        years in this field. I have worked as a consultant in cultivating grains, and also as a manager of my own
+        company, Geterra.
+      </p>
+      <p>
+        If you are interested to buy grains in bulk straight from the producer, please contact me via the form in the
+        Contact section. Delivery is possible only during the harvest season, as we do not have storage facilities.
+      </p>
+      <p>
+        For consultancy services in cultivating grain crops, please use the same form for contact.
       </p>
     </React.Fragment>
 );
@@ -19,13 +26,20 @@ const AboutEnglish = () => (
 const AboutRomanian = () => (
     <React.Fragment>
       <p>
-        Suntem on companie de familie  din Maxineni, judetul Braila, producatoare de cereale.
+        Mă numesc Gelu Țurcanu și sunt managerul Geterra, o companie de familie din Măxineni, județul Brăila,
+        producătoare de cereale.
        </p>
        <p>
-        Gelu Turcanu a absolvit facultatea Ion Ionescu de la Brad din Iasi ca inginer agronom.
-        Lucreaza in agricultura de peste 30 de ani, iar in ultimii 10 ani a lucrat drept consultant, si ca manager al
-        acestei companii.
-        Suntem interesati sa lucram direct cu companii care vor sa cumpere direct de la producator.
+        Am absolvit facultatea Ion Ionescu de la Brad din Iași ca inginer agronom, și lucrez în agricultură de peste 30
+        de ani. Am lucrat drept consultant în producerea cerealelor, dar și ca manager al propriei companii, Geterra.
+      </p>
+      <p>
+        Dacă doriți să cumpărați cereale en gros direct de la producător, vă rog să mă contactați via formularul din
+        secțiunea Contact. Livrarea este posibilă doar în perioada recoltei, deoarece nu avem servicii de stocare a
+        cerealelor.
+      </p>
+      <p>
+        Pentru consultanță în domeniul agricol (creșterea cerealelor), vă rog folosiți același formular pentru contact.
       </p>
     </React.Fragment>
 );
