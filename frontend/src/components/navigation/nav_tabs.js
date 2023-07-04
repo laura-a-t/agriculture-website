@@ -10,6 +10,8 @@ import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 import About from '../pages/about_page.js';
 import Products from '../pages/products_page.js';
 
+import './nav_tabs.css';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
