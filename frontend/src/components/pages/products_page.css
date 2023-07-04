@@ -1,17 +1,15 @@
-.MuiGridListTileBar-root {
+.MuiImageListItemBar-root {
     background: rgba(255, 255, 255, 0.75) !important;
 }
 
 
-.MuiGridListTileBar-titleWrap {
+.MuiImageListItemBar-titleWrap {
     color: #2e2e2e !important;
     font-weight: bold;
     text-align: center;
 }
 
 .cardContainer {
-    align-content: center !important;
-    align-items: center !important;
     margin: 0px !important;
 }
 
