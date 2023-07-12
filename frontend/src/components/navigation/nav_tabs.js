@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 import About from '../pages/about_page.js';
 import Products from '../pages/products_page.js';
+import Contact from '../pages/contact_page.js';
 
 import './nav_tabs.css';
 
@@ -86,7 +87,7 @@ function NavTabs(props) {
         <Products/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Page Three
+        <Contact/>
       </TabPanel>
     </div>
   );
