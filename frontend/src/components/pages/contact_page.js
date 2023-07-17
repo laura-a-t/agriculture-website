@@ -152,7 +152,7 @@ function Contact(props) {
             required="true"
             variant="filled"
             multiline="true"
-            rows="5"
+            rows="3"
           />
           <Button
             variant="contained"
