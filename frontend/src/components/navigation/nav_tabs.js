@@ -80,13 +80,13 @@ function NavTabs(props) {
           <Tab label={state.contact[props.language]} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel style={{ background: '#f2fce8' }} value={value} index={0}>
         <About/>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel style={{ background: '#f2fce8' }} value={value} index={1}>
         <Products/>
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel style={{ background: '#f2fce8' }} value={value} index={2}>
         <Contact/>
       </TabPanel>
     </div>

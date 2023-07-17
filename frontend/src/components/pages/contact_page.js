@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React, { useState }  from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button, MenuItem, FormControl } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -6,18 +6,52 @@ import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 import {theme} from '../../themes/index.js'
 
 
-class Contact extends Component {
-    render () {
+const mapEmbedCode = `
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1400.6124588554214!2d27.622072860201218!3d45.40480387421459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2snl!4v1689253274560!5m2!1sen!2snl"
+    width="200"
+    height="150"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+  `;
 
-    this.state = {
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        sent: false,
-        buttonText: "Send Message",
-        emailError: false,
-      };
+
+function Contact(props) {
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    const validateEmail = (email) => {
+    // Simple email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+    const handleEmailChange = (e) => {
+      const newEmail = e.target.value;
+      setEmail(newEmail);
+      setIsFormValid(validateEmail(newEmail) && newEmail !== '' && message !== '' && name !== '');
+    };
+
+    const handleNameChange = (e) => {
+      setName(e.target.value);
+      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '');
+    };
+
+    const handleMessageChange = (e) => {
+      setMessage(e.target.value);
+      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '');
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      // Handle form submission logic here
+      // You can send the form data to a server or perform any other actions
+      console.log('Form submitted:', { name, email, message });
+    };
 
     const inputs = {
     fullName: {
@@ -60,14 +94,16 @@ class Contact extends Component {
     <ThemeProvider theme={theme}>
         <FormControl
         autoComplete="off"
-        fullWidth
+        sx={{ width: '50%' }}
+        component="form"
+        onSubmit={handleSubmit}
         >
           <TextField
             id="name"
-            value={this.state.name}
-            onChange={(e) => this.setState({ name: e.target.value })}
-            onBlur={(e) => this.setState({ name: e.target.value })}
-            label={inputs.fullName[this.props.language]}
+            value={name}
+            onChange={handleNameChange}
+            onBlur={handleNameChange}
+            label={inputs.fullName[props.language]}
             // error={errors[inputFieldValue.name]}
             fullWidth
             autoComplete="none"
@@ -78,9 +114,9 @@ class Contact extends Component {
           />
           <TextField
             id="email"
-            //onChange={}
-            //onBlur={}
-            label={inputs.email[this.props.language]}
+            onChange={handleEmailChange}
+            onBlur={handleEmailChange}
+            label={inputs.email[props.language]}
             // error={errors[inputFieldValue.name]}
             fullWidth
             autoComplete="none"
@@ -94,20 +130,20 @@ class Contact extends Component {
             id="subject"
             select
             variant="filled"
-            label={inputs.subject.label[this.props.language]}
-            placeholder={inputs.subject.label[this.props.language]}
+            label={inputs.subject.label[props.language]}
+            placeholder={inputs.subject.label[props.language]}
             fullWidth
           >
-            <MenuItem value={10}>{inputs.subject.buy[this.props.language]}</MenuItem>
-            <MenuItem value={20}>{inputs.subject.consult[this.props.language]}</MenuItem>
-            <MenuItem value={30}>{inputs.subject.other[this.props.language]}</MenuItem>
+            <MenuItem value={10}>{inputs.subject.buy[props.language]}</MenuItem>
+            <MenuItem value={20}>{inputs.subject.consult[props.language]}</MenuItem>
+            <MenuItem value={30}>{inputs.subject.other[props.language]}</MenuItem>
           </TextField>
           <TextField
             id="message"
-            value={this.state.message}
-            onChange={(e) => this.setState({ message: e.target.value })}
-            onBlur={(e) => this.setState({ message: e.target.value })}
-            label={inputs.message[this.props.language]}
+            value={message}
+            onChange={handleMessageChange}
+            onBlur={handleMessageChange}
+            label={inputs.message[props.language]}
             // error={errors[inputFieldValue.name]}
             fullWidth
             autoComplete="none"
@@ -121,14 +157,19 @@ class Contact extends Component {
             type="submit"
             color="secondary"
             fullWidth
-            //disabled={!formIsValid()}
+            disabled={!isFormValid}
           >
-            {inputs.sendText[this.props.language]}
+            {inputs.sendText[props.language]}
           </Button>
         </FormControl>
+        <div>
+            <div dangerouslySetInnerHTML={{ __html: mapEmbedCode }} />
+            <p>Strada Matei Basarab 103 bis</p>
+            <p>Măxineni, Brăila</p>
+            <p>România</p>
+      </div>
     </ThemeProvider>
     )
-    }
 };
 
 const mapStateToProps = (state) => ({
