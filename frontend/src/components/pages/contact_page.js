@@ -5,6 +5,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 import {theme} from '../../themes/index.js'
 
+import './contact_page.css';
+
 
 const mapEmbedCode = `
     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1400.6124588554214!2d27.622072860201218!3d45.40480387421459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2snl!4v1689253274560!5m2!1sen!2snl"
@@ -91,7 +93,7 @@ function Contact(props) {
     }
 
   return (
-    <ThemeProvider theme={theme}>
+    <div className="contactContainer">
         <FormControl
         autoComplete="off"
         sx={{ width: '50%' }}
@@ -162,13 +164,13 @@ function Contact(props) {
             {inputs.sendText[props.language]}
           </Button>
         </FormControl>
-        <div>
-            <div dangerouslySetInnerHTML={{ __html: mapEmbedCode }} />
+        <div className="mapAddressContainer">
+            <div dangerouslySetInnerHTML={{ __html: mapEmbedCode }} className="mapContainer"/>
             <p style={{whiteSpace: 'pre-wrap'}}>Strada Matei Basarab 103 bis{"\n"}
             Măxineni, Brăila{"\n"}
             România</p>
       </div>
-    </ThemeProvider>
+    </div>
     )
 };
 

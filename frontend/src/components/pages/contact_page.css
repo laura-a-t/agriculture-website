@@ -1,0 +1,15 @@
+.mapAddressContainer {
+  width: 35%;
+  margin-left: 5%;
+}
+
+.mapContainer iframe {
+  width: 100%;
+  height: auto;
+}
+
+.contactContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
