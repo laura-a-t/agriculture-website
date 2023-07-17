@@ -164,9 +164,9 @@ function Contact(props) {
         </FormControl>
         <div>
             <div dangerouslySetInnerHTML={{ __html: mapEmbedCode }} />
-            <p>Strada Matei Basarab 103 bis</p>
-            <p>Măxineni, Brăila</p>
-            <p>România</p>
+            <p style={{whiteSpace: 'pre-wrap'}}>Strada Matei Basarab 103 bis{"\n"}
+            Măxineni, Brăila{"\n"}
+            România</p>
       </div>
     </ThemeProvider>
     )
