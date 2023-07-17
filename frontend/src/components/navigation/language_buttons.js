@@ -5,6 +5,8 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 import { selectLanguage } from '../../state/actions.js';
 
+import './language_buttons.css';
+
 
 class LanguageSelect extends React.Component {
     handleChange(language) {
@@ -13,10 +15,12 @@ class LanguageSelect extends React.Component {
 
     render(){
     return (
-      <ButtonGroup variant="text">
-        <Button onClick={() => (this.handleChange(ENGLISH))}><b>{ENGLISH}</b></Button>
-        <Button onClick={() => (this.handleChange(ROMANIAN))}><b>{ROMANIAN}</b></Button>
-      </ButtonGroup>
+      <div className="button-overlay">
+          <ButtonGroup variant="text" aria-label="button group" style={{ backgroundColor: '#f2fce8' }}>
+            <Button onClick={() => (this.handleChange(ENGLISH))}><b>{ENGLISH}</b></Button>
+            <Button onClick={() => (this.handleChange(ROMANIAN))}><b>{ROMANIAN}</b></Button>
+          </ButtonGroup>
+      </div>
       )
     }
   }
