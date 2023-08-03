@@ -24,6 +24,7 @@ function Contact(props) {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
     const [isFormValid, setIsFormValid] = useState(false);
+    const [isSent, setIsSent] = useState(false);
 
     const validateEmail = (email) => {
     // Simple email validation regex
@@ -70,10 +71,7 @@ function Contact(props) {
       });
       let resJson = await res.json();
       if (res.status === 200) {
-        setName('');
-        setEmail('');
-        setSubject('')
-        setMessage('');
+        setIsSent(true);
       } else {
       console.log(resJson.message);
       }
@@ -116,11 +114,16 @@ function Contact(props) {
     sendText: {
         [ENGLISH]: "Send",
         [ROMANIAN]: "Trimite"
-    }
+        },
+    success: {
+        [ENGLISH]: "Message sent!",
+        [ROMANIAN]: "Mesajul a fost trimis!"
+        }
     }
 
   return (
     <div className="contactContainer">
+        {isSent ? inputs.success[props.language] :
         <FormControl
         autoComplete="off"
         sx={{ width: '50%' }}
@@ -165,8 +168,8 @@ function Contact(props) {
             fullWidth
           >
             <MenuItem value={inputs.subject.buy[props.language]}>{inputs.subject.buy[props.language]}</MenuItem>
-            <MenuItem value={inputs.subject.buy[props.language]}>{inputs.subject.consult[props.language]}</MenuItem>
-            <MenuItem value={inputs.subject.buy[props.language]}>{inputs.subject.other[props.language]}</MenuItem>
+            <MenuItem value={inputs.subject.consult[props.language]}>{inputs.subject.consult[props.language]}</MenuItem>
+            <MenuItem value={inputs.subject.other[props.language]}>{inputs.subject.other[props.language]}</MenuItem>
           </TextField>
           <TextField
             id="message"
@@ -190,7 +193,7 @@ function Contact(props) {
           >
             {inputs.sendText[props.language]}
           </Button>
-        </FormControl>
+        </FormControl>}
         <div className="mapAddressContainer">
             <div dangerouslySetInnerHTML={{ __html: mapEmbedCode }} className="mapContainer"/>
             <p style={{whiteSpace: 'pre-wrap'}}>Strada Matei Basarab 103 bis{"\n"}
