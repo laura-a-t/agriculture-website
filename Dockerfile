@@ -17,7 +17,6 @@ WORKDIR /agriculture-website
 COPY backend ./backend
 COPY entrypoint.sh .
 COPY config.json .
-COPY credentials.json .
 RUN chmod +x /agriculture-website/entrypoint.sh
 
 # Install PIP dependencies

@@ -2,13 +2,13 @@ import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+import smtplib
+import ssl
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from backend.util import configure_logging, get_config
 
-SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 LOGGER = logging.getLogger(__name__)
 
 configure_logging()
@@ -38,27 +38,47 @@ class EmailData(BaseModel):
 @app.post("/send_email/")
 async def send_email(email_data: EmailData):
     LOGGER.info(f"Received post request for {email_data}")
-    sender_email = "your_email@gmail.com"  # Replace with your Gmail address
-    service_account_file = "path/to/your/service-account-key.json"
 
+    # Email details
+    email = config['email']
+    password = config['password']
     subject = email_data.subject
-    message = f"Name: {email_data.name}\nEmail: {email_data.email}\n\n{email_data.message}"
+    message_text = f"Name: {email_data.name}\nEmail: {email_data.email}\nSubject: {email_data.subject}\n\n{email_data.message}"
 
-    msg = MIMEText(message)
-    msg['From'] = sender_email
-    msg['To'] = sender_email  # Send the email to yourself
-    msg['Subject'] = subject
-
+    # Set up the SMTP server
+    smtp_server = "smtp.gmail.com"
+    port = 587
+    server = smtplib.SMTP(smtp_server, port)
     try:
-        credentials = service_account.Credentials.from_service_account_file(service_account_file, scopes=SCOPES)
-        service = build('gmail', 'v1', credentials=credentials)
+        # Connect to the SMTP server
+        context = ssl.create_default_context()
+        server.starttls(context=context)
 
-        message = {'raw': msg.as_string()}
-        service.users().messages().send(userId='me', body=message).execute()
+        # Log in with the sender's email and password
+        server.login(email, password)
 
-        return {"message": "Email sent successfully!"}
+        # Create the email message
+        message = MIMEMultipart()
+        message["From"] = email
+        message["To"] = email
+        message["Subject"] = subject
+
+        # Attach the body to the message
+        message.attach(MIMEText(message_text, "plain"))
+
+        # Send the email
+        server.sendmail(email, email, message.as_string())
+
+        LOGGER.info("Email sent successfully!")
+        return {"message": "Email sent successfully"}
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
+
+    finally:
+        # Disconnect from the SMTP server
+        server.quit()
+
 
 @app.get("/")
 def index():
