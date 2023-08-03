@@ -13,7 +13,7 @@ class Products extends React.Component {
     render () {
     return (
     <React.Fragment>
-      <ImageList cellHeight={300} cols={7} className="cardContainer">
+      <ImageList cellheight={300} cols={7} className="cardContainer">
         {productsData.map((product, index) => {
         const name = product.name[this.props.language];
         return (

@@ -1,9 +1,7 @@
 import React, { useState }  from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button, MenuItem, FormControl } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import {ENGLISH, ROMANIAN} from '../../state/constants.js';
-import {theme} from '../../themes/index.js'
 
 import './contact_page.css';
 
@@ -23,6 +21,7 @@ function Contact(props) {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
     const [isFormValid, setIsFormValid] = useState(false);
 
@@ -35,24 +34,49 @@ function Contact(props) {
     const handleEmailChange = (e) => {
       const newEmail = e.target.value;
       setEmail(newEmail);
-      setIsFormValid(validateEmail(newEmail) && newEmail !== '' && message !== '' && name !== '');
+      setIsFormValid(validateEmail(newEmail) && newEmail !== '' && message !== '' && name !== '' && subject !== '');
     };
 
     const handleNameChange = (e) => {
       setName(e.target.value);
-      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '');
+      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '' && subject !== '');
+    };
+
+    const handleSubjectChange = (e) => {
+      setSubject(e.target.value);
+      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '' && subject !== '');
     };
 
     const handleMessageChange = (e) => {
       setMessage(e.target.value);
-      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '');
+      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '' && subject !== '');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      // Handle form submission logic here
-      // You can send the form data to a server or perform any other actions
-      console.log('Form submitted:', { name, email, message });
+    try {
+      let res = await fetch("http://0.0.0.0:8080/send_email/", {
+        method: "POST",
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          subject: subject,
+          message: message
+        }),
+        mode: "cors"
+      });
+      let resJson = await res.json();
+      if (res.status === 200) {
+        setName('');
+        setEmail('');
+        setSubject('')
+        setMessage('');
+      } else {
+      console.log(resJson.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
     };
 
     const inputs = {
@@ -106,10 +130,9 @@ function Contact(props) {
             onChange={handleNameChange}
             onBlur={handleNameChange}
             label={inputs.fullName[props.language]}
-            // error={errors[inputFieldValue.name]}
             fullWidth
             autoComplete="none"
-            required="true"
+            required={true}
             variant="standard"
             InputProps={{ style: { paddingLeft: 10} }}
             InputLabelProps={{ style: { paddingLeft: 12} }}
@@ -119,10 +142,9 @@ function Contact(props) {
             onChange={handleEmailChange}
             onBlur={handleEmailChange}
             label={inputs.email[props.language]}
-            // error={errors[inputFieldValue.name]}
             fullWidth
             autoComplete="none"
-            required="true"
+            required={true}
             variant="standard"
             InputProps={{ style: { paddingLeft: 10, paddingTop: 10} }}
             InputLabelProps={{ style: { paddingLeft: 12, paddingTop: 10} }}
@@ -130,7 +152,10 @@ function Contact(props) {
           <TextField
             key="subject"
             id="subject"
+            onChange={handleSubjectChange}
+            onBlur={handleSubjectChange}
             select
+            defaultValue=""
             variant="filled"
             label={inputs.subject.label[props.language]}
             placeholder={inputs.subject.label[props.language]}
@@ -146,12 +171,11 @@ function Contact(props) {
             onChange={handleMessageChange}
             onBlur={handleMessageChange}
             label={inputs.message[props.language]}
-            // error={errors[inputFieldValue.name]}
             fullWidth
             autoComplete="none"
-            required="true"
+            required={true}
             variant="filled"
-            multiline="true"
+            multiline={true}
             rows="3"
           />
           <Button

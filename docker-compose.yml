@@ -1,0 +1,9 @@
+version: "1"
+
+services:
+   app:
+        build: .
+        command:
+          run
+        ports:
+            - "8080:8080"
