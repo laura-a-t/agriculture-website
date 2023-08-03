@@ -57,6 +57,9 @@ function Contact(props) {
     try {
       let res = await fetch("http://0.0.0.0:8080/send_email/", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
         body: JSON.stringify({
           name: name,
           email: email,
@@ -161,9 +164,9 @@ function Contact(props) {
             placeholder={inputs.subject.label[props.language]}
             fullWidth
           >
-            <MenuItem value={10}>{inputs.subject.buy[props.language]}</MenuItem>
-            <MenuItem value={20}>{inputs.subject.consult[props.language]}</MenuItem>
-            <MenuItem value={30}>{inputs.subject.other[props.language]}</MenuItem>
+            <MenuItem value={inputs.subject.buy[props.language]}>{inputs.subject.buy[props.language]}</MenuItem>
+            <MenuItem value={inputs.subject.buy[props.language]}>{inputs.subject.consult[props.language]}</MenuItem>
+            <MenuItem value={inputs.subject.buy[props.language]}>{inputs.subject.other[props.language]}</MenuItem>
           </TextField>
           <TextField
             id="message"
