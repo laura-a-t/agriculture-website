@@ -1,9 +1,9 @@
 import React, { useState }  from 'react';
 import { connect } from 'react-redux';
-import { TextField, Button, MenuItem, FormControl } from '@mui/material';
+import { TextField, Button, MenuItem, FormControl, Box } from '@mui/material';
 import {ENGLISH, ROMANIAN} from '../../state/constants.js';
 
-import './contact_page.css';
+import styles from './contact_page.css';
 
 
 const mapEmbedCode = `
@@ -17,78 +17,23 @@ const mapEmbedCode = `
   `;
 
 
-function Contact(props) {
-
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [subject, setSubject] = useState('');
-    const [message, setMessage] = useState('');
-    const [isFormValid, setIsFormValid] = useState(false);
-    const [isSent, setIsSent] = useState(false);
-
-    const validateEmail = (email) => {
-    // Simple email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-    const handleEmailChange = (e) => {
-      const newEmail = e.target.value;
-      setEmail(newEmail);
-      setIsFormValid(validateEmail(newEmail) && newEmail !== '' && message !== '' && name !== '' && subject !== '');
-    };
-
-    const handleNameChange = (e) => {
-      setName(e.target.value);
-      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '' && subject !== '');
-    };
-
-    const handleSubjectChange = (e) => {
-      setSubject(e.target.value);
-      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '' && subject !== '');
-    };
-
-    const handleMessageChange = (e) => {
-      setMessage(e.target.value);
-      setIsFormValid(validateEmail(email) && email !== '' && message !== '' && name !== '' && subject !== '');
-    };
-
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    try {
-      let res = await fetch("http://0.0.0.0:8080/send_email/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          subject: subject,
-          message: message
-        }),
-        mode: "cors"
-      });
-      let resJson = await res.json();
-      if (res.status === 200) {
-        setIsSent(true);
-      } else {
-      console.log(resJson.message);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    };
-
-    const inputs = {
+const inputs = {
     fullName: {
         [ENGLISH]: 'Full Name',
         [ROMANIAN]: 'Nume'
+        },
+    errorName: {
+        [ENGLISH]: 'Name missing',
+        [ROMANIAN]: 'Lipsește numele'
         },
     email: {
         [ENGLISH]: 'E-mail',
         [ROMANIAN]: 'E-mail'
         },
+    errorEmail: {
+        [ENGLISH]: 'Invalid email',
+        [ROMANIAN]: 'E-mail nevalabil'
+    },
     subject: {
         label: {
             [ENGLISH]: 'Subject',
@@ -107,23 +52,128 @@ function Contact(props) {
             [ROMANIAN]: 'Alt subiect'
             }
         },
+    errorSubject: {
+        [ENGLISH]: 'Please select a subject',
+        [ROMANIAN]: 'Vă rog selectați un subiect'
+    },
     message: {
         [ENGLISH]: 'Message',
         [ROMANIAN]: 'Mesaj'
         },
+    errorMessage: {
+        [ENGLISH]: 'Message cannot be empty',
+        [ROMANIAN]: 'Mesajul nu poate fi gol'
+    },
     sendText: {
         [ENGLISH]: "Send",
         [ROMANIAN]: "Trimite"
-        },
-    success: {
-        [ENGLISH]: "Message sent!",
-        [ROMANIAN]: "Mesajul a fost trimis!"
         }
     }
 
+
+function Contact(props) {
+
+    const [name, setName] = useState('');
+    const [nameHasError, setNameHasError] = useState(false);
+    const [email, setEmail] = useState('');
+    const [emailHasError, setEmailHasError] = useState(false);
+    const [subject, setSubject] = useState('');
+    const [subjectHasError, setSubjectHasError] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageHasError, setMessageHasError] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [isSent, setIsSent] = useState(false);
+    const [isSentError, setIsSentError] = useState(false);
+
+    const [sentFeedback, setSentFeedback] = useState({
+        [ENGLISH]: '',
+        [ROMANIAN]: ''
+    });
+
+    const validateEmail = (email) => {
+    // Simple email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+    };
+
+    const updateIsFormValid = () => {
+      setIsFormValid(!emailHasError && email !== '' && name !== '' && subject !== '' && message !== '');
+    }
+
+    const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+      const hasError = !validateEmail(e.target.value);
+      setEmailHasError(hasError);
+      updateIsFormValid();
+    };
+
+    const handleNameChange = (e) => {
+      setName(e.target.value);
+      const hasError = e.target.value === '';
+      setNameHasError(hasError);
+      updateIsFormValid();
+    };
+
+    const handleSubjectChange = (e) => {
+      setSubject(e.target.value);
+      const hasError = e.target.value === '';
+      setSubjectHasError(hasError);
+      updateIsFormValid();
+    };
+
+    const handleMessageChange = (e) => {
+      setMessage(e.target.value);
+      const hasError = e.target.value === '';
+      setMessageHasError(hasError);
+      updateIsFormValid();
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        let res = await fetch("http://0.0.0.0:8080/send_email/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+          }),
+          mode: "cors"
+        });
+        let resJson = await res.json();
+        setIsSent(true);
+        if (res.status === 200) {
+          setSentFeedback({
+            [ENGLISH]: 'Message successfully sent!',
+            [ROMANIAN]: 'Mesajul a fost trimis!'
+          });
+          setIsSentError(false);
+        } else {
+          console.log(resJson.message);
+          setSentFeedback({
+            [ENGLISH]: 'Message failed to send. Try again later',
+            [ROMANIAN]: 'Mesajul nu a putut fi trimis. Încercați mai târziu'
+          });
+          setIsSentError(true);
+        }
+      } catch (err) {
+        setIsSent(true);
+        console.log(err);
+        setSentFeedback({
+            [ENGLISH]: 'Message failed to send. Try again later',
+            [ROMANIAN]: 'Mesajul nu a putut fi trimis. Încercați mai târziu'
+          });
+        setIsSentError(true);
+      }
+    };
+
   return (
     <div className="contactContainer">
-        {isSent ? inputs.success[props.language] :
+        {isSent ? <Box>{sentFeedback[props.language]}</Box> :
         <FormControl
         autoComplete="off"
         sx={{ width: '50%' }}
@@ -136,6 +186,8 @@ function Contact(props) {
             onChange={handleNameChange}
             onBlur={handleNameChange}
             label={inputs.fullName[props.language]}
+            error={nameHasError}
+            helperText={nameHasError ? inputs.errorName[props.language] : ''}
             fullWidth
             autoComplete="none"
             required={true}
@@ -148,6 +200,8 @@ function Contact(props) {
             onChange={handleEmailChange}
             onBlur={handleEmailChange}
             label={inputs.email[props.language]}
+            error={emailHasError}
+            helperText={emailHasError ? inputs.errorEmail[props.language] : ''}
             fullWidth
             autoComplete="none"
             required={true}
@@ -160,6 +214,8 @@ function Contact(props) {
             id="subject"
             onChange={handleSubjectChange}
             onBlur={handleSubjectChange}
+            error={subjectHasError}
+            helperText={subjectHasError ? inputs.errorSubject[props.language] : ''}
             select
             defaultValue=""
             variant="filled"
@@ -177,6 +233,8 @@ function Contact(props) {
             onChange={handleMessageChange}
             onBlur={handleMessageChange}
             label={inputs.message[props.language]}
+            error={messageHasError}
+            helperText={messageHasError ? inputs.errorMessage[props.language] : ''}
             fullWidth
             autoComplete="none"
             required={true}
