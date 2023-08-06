@@ -1,4 +1,6 @@
 import logging
+import os
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -7,13 +9,12 @@ import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-from backend.util import configure_logging, get_config
+from backend.util import configure_logging
 
 LOGGER = logging.getLogger(__name__)
 
 configure_logging()
 app = FastAPI()
-config = get_config()
 
 origins = [
     "http://localhost:3000",
@@ -40,8 +41,8 @@ async def send_email(email_data: EmailData):
     LOGGER.info(f"Received post request for {email_data}")
 
     # Email details
-    email = config['email']
-    password = config['password']
+    email = os.getenv("email")
+    password = os.getenv("password")
     subject = email_data.subject
     message_text = f"Name: {email_data.name}\nEmail: {email_data.email}\nSubject: {email_data.subject}\n\n{email_data.message}"
 
