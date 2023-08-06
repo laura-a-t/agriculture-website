@@ -16,7 +16,6 @@ ENV LOG_LEVEL=INFO
 WORKDIR /agriculture-website
 COPY backend ./backend
 COPY entrypoint.sh .
-COPY config.json .
 RUN chmod +x /agriculture-website/entrypoint.sh
 
 # Install PIP dependencies
@@ -28,4 +27,4 @@ EXPOSE 8080
 # Command to run
 WORKDIR /agriculture-website
 ENTRYPOINT ["/agriculture-website/entrypoint.sh"]
-CMD ["help"]
+CMD ["run"]
