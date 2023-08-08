@@ -15,8 +15,6 @@ ENV LOG_LEVEL=INFO
 # Copy application
 WORKDIR /agriculture-website
 COPY backend ./backend
-COPY entrypoint.sh .
-RUN chmod +x /agriculture-website/entrypoint.sh
 
 # Install PIP dependencies
 COPY backend/requirements.txt .
@@ -26,5 +24,4 @@ EXPOSE 8080
 
 # Command to run
 WORKDIR /agriculture-website
-ENTRYPOINT ["/agriculture-website/entrypoint.sh"]
-CMD ["run"]
+CMD gunicorn backend.main:app -w 4 --max-requests 10 --timeout 120 --graceful-timeout 120 -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker
