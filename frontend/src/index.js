@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './state/reducers';
+import { Helmet } from 'react-helmet';
 
 import '@fontsource/poppins';
 
@@ -15,7 +16,14 @@ const store = createStore(rootReducer);
 const root = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <App>
+      <Helmet>
+        <meta charSet="utf-8"/>
+        <meta name="description" content="Geterra website">
+        <meta name="keywords" content="geterra,turcanu,maxieni,braila,romania,grains,cereals,producer,cereale,producator,consultanta">
+        <title>Geterra</title>
+      </Helmet>
+    </App>
   </Provider>
 );
 
