@@ -131,7 +131,7 @@ function Contact(props) {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        let res = await fetch("http://sea-turle-app/backend/send_email/", {
+        let res = await fetch("https://64.226.108.168/backend/send_email/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json; charset=utf-8",

@@ -17,7 +17,7 @@ configure_logging()
 app = FastAPI()
 
 origins = [
-    "http://sea-turle-app",
+    "https://geterra.ro",
 ]
 
 app.add_middleware(
