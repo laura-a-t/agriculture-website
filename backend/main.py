@@ -17,7 +17,7 @@ configure_logging()
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
+    "http://sea-turle-app",
 ]
 
 app.add_middleware(
@@ -79,8 +79,3 @@ async def send_email(email_data: EmailData):
     finally:
         # Disconnect from the SMTP server
         server.quit()
-
-
-@app.get("/")
-def index():
-    return "App is running"
